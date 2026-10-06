@@ -26,6 +26,46 @@ longueur=450
 canvas=Canvas(cv, width=largeur, height=longueur, bg='black')
 canvas.pack(padx=0, pady=0)
 
+#centrage du canva selon l'axe y
+canvas.pack(pady=25) 
+
+#mise en place et fonctionnement de la raquette
+largeur_raquette = 100
+hauteur_raquette = 15
+vitesse = 30
+
+#position initiale au centre en bas
+x_init = (largeur / 2) - (largeur_raquette / 2)
+y_init = longueur - 30
+
+#création du rectangle de la raquette
+raquette = canvas.create_rectangle(
+    x_init, y_init, 
+    x_init + largeur_raquette, y_init + hauteur_raquette, 
+    fill='cyan'
+)
+
+#fonctionnalité de déplacement
+def gauche(event):
+    #on récupère les coordonnées [x1, y1, x2, y2]
+    coords = canvas.coords(raquette)
+    #pas dépacer a gauche
+    if coords[0] > 0:
+        canvas.move(raquette, -vitesse, 0)
+
+def droite(event):
+    coords = canvas.coords(raquette)
+    #pas dépasser a droite
+    if coords[2] < largeur:
+        canvas.move(raquette, vitesse, 0)
+
+#lie fleches au canva
+cv.bind("<Left>", gauche)
+cv.bind("<Right>", droite)
+
+#fait en sorte que le canva reconnaisse touches du clavier
+cv.focus_set()
+
 def jouer():
     pass
 #bouton jouer
