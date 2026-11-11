@@ -424,4 +424,4 @@ class JeuCasseBrique:
 if __name__ == "__main__":
     fenetre = tk.Tk()
     jeu = JeuCasseBrique(fenetre)
-    fenetre.mainloop()
+    fenetre.mainloop() #a
