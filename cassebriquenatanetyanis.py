@@ -208,7 +208,7 @@ class JeuCasseBrique:
         self.raquette = Raquette(self.canvas, self.largeur_canevas, self.longueur_canevas)
         self.balle = Balle(self.canvas, self.raquette, self.largeur_canevas, self.longueur_canevas)
 
-        # Binds
+        #touches
         self.root.bind("<Left>", self.action_gauche)
         self.root.bind("<Right>", self.action_droite)
         self.root.bind("<space>", self.action_espace)
