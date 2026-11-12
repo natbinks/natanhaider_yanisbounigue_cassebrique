@@ -1,5 +1,8 @@
 INTRODUCTION Projet Casse Brique Développement Logiciel en Python Natan HAIDER et Yanis BOUNIGUE :
 
+l'URL de notre repository GitHub :
+https://github.com/natbinks/natanhaider_yanisbounigue_cassebrique.git
+
 Pour notre projet casse brique nous avons utilisé comme demandé la programmation en POO ainsi que l'implémentation des piles files listes.
 Pour la POO nous avons créé une classe pour définir chaque objet tels que les briques la balle et la raquette.
 Règles du jeu: casser toutes les briques avec la balle en évitant qu'elle tombe à l'aide de la raquette.
