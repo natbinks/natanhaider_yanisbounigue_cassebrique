@@ -246,7 +246,7 @@ class JeuCasseBrique:
         self.score_actuel = 0
         self.vies = 3
         self.jeu_en_cours = True
-        self.actualiser_hud()
+        self.actualiser_interface()
         
         for b in self.liste_briques:
             self.canvas.delete(b.id)
@@ -277,7 +277,7 @@ class JeuCasseBrique:
                 brique = Brique(self.canvas, x1, y1, w_brique, h_brique, est_bleue)
                 self.liste_briques.append(brique)
 
-    def actualiser_hud(self):
+    def actualiser_interface(self):
         self.label_score.config(text=f"Score : {self.score_actuel}")
         self.label_vies.config(text=f"Vies : {self.vies}")
 
@@ -304,7 +304,7 @@ class JeuCasseBrique:
         
         if etat_balle == "PERDU":
             self.vies -= 1
-            self.actualiser_hud()
+            self.actualiser_interface()
             self.journal_evenements.enfiler("Vie perdue")
             if self.vies <= 0:
                 self.canvas.create_text(self.largeur_canevas/2, self.longueur_canevas/2, text="GAME OVER", fill="red", font=("Arial", 50, "bold"), tags="texte_info")
@@ -336,7 +336,7 @@ class JeuCasseBrique:
                 else:
                     self.score_actuel += 5
                     
-                self.actualiser_hud()
+                self.actualiser_interface()
                 
                 if len(self.liste_briques) == 0:
                     self.canvas.create_text(self.largeur_canevas/2, self.longueur_canevas/2, text="VICTOIRE !", fill="green", font=("Arial", 50, "bold"), tags="texte_info")
