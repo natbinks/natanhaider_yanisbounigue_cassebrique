@@ -1,9 +1,6 @@
 import tkinter as tk
 import random
 
-# ==========================================
-# STRUCTURES DE DONNÉES REQUISES
-# ==========================================
 
 class Pile:
     #ajout des méthodes dépiler et empiler
