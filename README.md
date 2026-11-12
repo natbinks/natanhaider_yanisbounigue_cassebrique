@@ -13,6 +13,7 @@ Mode d'emploi de notre jeu:
 -Choisir difficulté (lent, normal, rapide) ou lancer directement la parti (régler en mode normal de base)
 -La raquette se contrôle avec les flèches directionnelles, droite et gauche
 -Faire rebondir la balle sur la raquette et cassé toutes les briques sans perdre les 3 vies. 
+-Le score augmente de 5 lorsqu'on touche une brique et de 10 lorsqu'on la casse
 
 ---------------------------------------------------------------------------------------------------
 Problèmes rencontrés: 
