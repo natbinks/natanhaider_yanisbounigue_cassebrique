@@ -6,7 +6,7 @@ import random
 # ==========================================
 
 class Pile:
-    """Implémentation d'une Pile (LIFO) pour gérer l'historique des menus[cite: 2]."""
+    #ajout des méthodes dépiler et empiler
     def __init__(self):
         self.elements = []
     def empiler(self, item):
@@ -17,7 +17,7 @@ class Pile:
         return len(self.elements) == 0
 
 class File:
-    """Implémentation d'une File (FIFO) pour un journal d'événements[cite: 2]."""
+   #ajout des méthodes défiler et enfiler
     def __init__(self):
         self.elements = []
     def enfiler(self, item):
@@ -32,7 +32,6 @@ class File:
 # ==========================================
 
 class Brique:
-    """Gère l'affichage et les points de vie d'une brique individuelle."""
     def __init__(self, canvas, x1, y1, largeur, hauteur, est_bleue):
         self.canvas = canvas
         self.est_bleue = est_bleue
@@ -42,7 +41,6 @@ class Brique:
         self.id = self.canvas.create_rectangle(x1, y1, x1 + largeur, y1 + hauteur, fill=couleur, outline="grey")
 
     def recevoir_coup(self):
-        """Réduit la vie de la brique. Retourne True si elle est détruite, False sinon."""
         self.vies -= 1
         if self.vies <= 0:
             self.canvas.delete(self.id)
@@ -52,7 +50,6 @@ class Brique:
             return False
 
 class Raquette:
-    """Gère la raquette contrôlée par le joueur."""
     def __init__(self, canvas, fenetre_largeur, fenetre_longueur):
         self.canvas = canvas
         self.largeur_raquette = 120
@@ -81,7 +78,6 @@ class Raquette:
         return self.canvas.coords(self.id)
 
 class Balle:
-    """Gère la balle, sa physique et ses déplacements."""
     def __init__(self, canvas, raquette, fenetre_largeur, fenetre_longueur):
         self.canvas = canvas
         self.raquette = raquette
@@ -148,9 +144,7 @@ class Balle:
     def get_coords(self):
         return self.canvas.coords(self.id)
 
-# ==========================================
-# CLASSE PRINCIPALE (CONTRÔLEUR)
-# ==========================================
+
 
 class JeuCasseBrique:
     def __init__(self, root):
@@ -181,7 +175,7 @@ class JeuCasseBrique:
         tk.Button(self.menu_principal, text="Choisir la difficulté", command=lambda: self.afficher_menu(self.menu_difficulte), width=25, height=2).pack(pady=10)
         tk.Button(self.menu_principal, text="Quitter le jeu", command=self.root.destroy, width=25, height=2, fg="red").pack(pady=10)
 
-        # Menu Difficulté
+        #menu Difficulté
         self.menu_difficulte = tk.Frame(self.root, bg='grey')
         tk.Label(self.menu_difficulte, text="CHOISIR LA VITESSE", font=("Arial", 25, "bold"), bg='grey').pack(pady=60)
         tk.Button(self.menu_difficulte, text="Lent", command=lambda: self.choisir_difficulte("Lent", 3, -3), width=20, height=2).pack(pady=10)
@@ -189,7 +183,7 @@ class JeuCasseBrique:
         tk.Button(self.menu_difficulte, text="Rapide", command=lambda: self.choisir_difficulte("Rapide", 8, -8), width=20, height=2).pack(pady=10)
         tk.Button(self.menu_difficulte, text="Retour", command=self.retour_menu, width=20, height=2).pack(pady=40)
 
-        # Écran de Jeu
+        #écran de Jeu
         self.ecran_jeu = tk.Frame(self.root, bg='grey')
         barre_info = tk.Frame(self.ecran_jeu, bg='grey')
         barre_info.pack(fill='x', padx=50, pady=10)
@@ -207,7 +201,7 @@ class JeuCasseBrique:
         self.canvas = tk.Canvas(self.ecran_jeu, width=self.largeur_canevas, height=self.longueur_canevas, bg='black')
         self.canvas.pack(pady=10)
 
-        # Création des instances du jeu
+        #création de la balle et de la raquette
         self.raquette = Raquette(self.canvas, self.largeur_canevas, self.longueur_canevas)
         self.balle = Balle(self.canvas, self.raquette, self.largeur_canevas, self.longueur_canevas)
 
@@ -287,7 +281,7 @@ class JeuCasseBrique:
         self.label_score.config(text=f"Score : {self.score_actuel}")
         self.label_vies.config(text=f"Vies : {self.vies}")
 
-    # --- ACTIONS JOUEUR ---
+    #déplacement et actions du joueur
     def action_gauche(self, event):
         self.balle.suivre_raquette("gauche")
         self.raquette.deplacer_gauche()
@@ -302,7 +296,7 @@ class JeuCasseBrique:
             self.balle.lancer()
             self.boucle_jeu()
 
-    # --- LOGIQUE PRINCIPALE ---
+    #boucle principale du jeu
     def boucle_jeu(self):
         if not self.jeu_en_cours or not self.balle.en_mouvement: return
         
@@ -322,11 +316,11 @@ class JeuCasseBrique:
         coords_b = self.balle.get_coords()
         coords_r = self.raquette.get_coords()
         
-        # Collision Raquette
+        #collision raquette
         if coords_b[3] >= coords_r[1] and coords_b[3] <= coords_r[3] and coords_b[2] >= coords_r[0] and coords_b[0] <= coords_r[2]:
             self.balle.forcer_monter()
             
-        # Collision Briques
+        #collision briques
         objets_touches = self.canvas.find_overlapping(*coords_b)
         for obj_id in objets_touches:
             brique_touchee = next((b for b in self.liste_briques if b.id == obj_id), None)
