@@ -27,9 +27,7 @@ class File:
     def est_vide(self):
         return len(self.elements) == 0
 
-# ==========================================
-# CLASSES DES ENTITÉS DU JEU
-# ==========================================
+
 
 class Brique:
     def __init__(self, canvas, x1, y1, largeur, hauteur, est_bleue):
@@ -41,6 +39,7 @@ class Brique:
         self.id = self.canvas.create_rectangle(x1, y1, x1 + largeur, y1 + hauteur, fill=couleur, outline="grey")
 
     def recevoir_coup(self):
+        #enlève 1 point de vie à la brique touchée par la balle les bleues ont 2 pv et les blanches 1 pv
         self.vies -= 1
         if self.vies <= 0:
             self.canvas.delete(self.id)
@@ -63,6 +62,7 @@ class Raquette:
         self.reinitialiser_position()
 
     def reinitialiser_position(self):
+        #mettre la raquette au milieu dès qu'on lance la partie
         x_init = (self.fenetre_largeur / 2) - (self.largeur_raquette / 2)
         self.canvas.coords(self.id, x_init, self.y_init, x_init + self.largeur_raquette, self.y_init + self.hauteur_raquette)
 
@@ -75,6 +75,7 @@ class Raquette:
             self.canvas.move(self.id, self.vitesse, 0)
 
     def get_coords(self):
+        #get pour obtenir les coordonnées de la raquette
         return self.canvas.coords(self.id)
 
 class Balle:
@@ -108,6 +109,7 @@ class Balle:
         self.vitesse_y = self.vitesse_y_ref
 
     def suivre_raquette(self, direction):
+        #suit la raquette avant le début de la partie et avant l'appui de la touche espace
         if not self.en_mouvement:
             if direction == "gauche" and self.raquette.get_coords()[0] > 0:
                 self.canvas.move(self.id, -self.raquette.vitesse, 0)
@@ -115,6 +117,7 @@ class Balle:
                 self.canvas.move(self.id, self.raquette.vitesse, 0)
 
     def lancer(self):
+        #permet de récupérer l'information que la balle est en mouvement
         self.en_mouvement = True
 
     def deplacer(self):
@@ -123,31 +126,34 @@ class Balle:
         self.canvas.move(self.id, self.vitesse_x, self.vitesse_y)
         coords = self.canvas.coords(self.id)
         
-        # Rebond Murs
+        #rebondi sur les murs
         if coords[0] <= 0 or coords[2] >= self.fenetre_largeur:
             self.vitesse_x = -self.vitesse_x 
         if coords[1] <= 0:
             self.vitesse_y = -self.vitesse_y 
             
-        # Tombe en bas
+        #quand la balle touche le sol
         if coords[3] >= self.fenetre_longueur:
             return "PERDU"
             
         return "OK"
 
     def inverser_y(self):
+        #c'est le rebond sur la raquette
         self.vitesse_y = -self.vitesse_y
         
     def forcer_monter(self):
+        #permet d'éviter les bugs de rebond
         self.vitesse_y = -abs(self.vitesse_y)
 
     def get_coords(self):
         return self.canvas.coords(self.id)
 
 
-
+#classe permettant de gérer le jeu
 class JeuCasseBrique:
     def __init__(self, root):
+        #initialisation de la fenêtre de jeu
         self.root = root
         self.root.title('Casse Brique')
         self.root.geometry('900x750+300+100')
@@ -166,7 +172,7 @@ class JeuCasseBrique:
         self.afficher_menu(self.menu_principal)
 
     def creer_interface(self):
-        # Menu Principal
+        #menu Principal
         self.menu_principal = tk.Frame(self.root, bg='grey')
         tk.Label(self.menu_principal, text="CASSE BRIQUE", font=("Arial", 35, "bold"), bg='grey').pack(pady=60)
         self.label_difficulte = tk.Label(self.menu_principal, text="Difficulté : Normal", bg='grey', font=("Arial", 14))
